@@ -4,12 +4,12 @@ import { Roles } from '../constants/htmlRoles';
 import { Urls } from '../constants/urls';
 import { ErrorMessages } from '../constants/errorMessages';
 import { LinkNames, TextBoxNames, ButtonNames } from '../constants/roleNames';
+import { TestData } from '../constants/testData';
 
 dotenv.config();
 
 const wikipediaUsername = process.env.WIKIPEDIA_USERNAME;
 const wikipediaPassword = process.env.WIKIPEDIA_PASSWORD;
-const authFile = 'src/auth/login.json';
 
 test('Sign in to Wikipedia', async ({ page }) => {
     if (!wikipediaUsername || !wikipediaPassword) {
@@ -34,7 +34,7 @@ test('Sign in to Wikipedia', async ({ page }) => {
     });
 
     await test.step('Store login session and verify login success', async () => {
-        await page.context().storageState({ path: authFile });
+        await page.context().storageState({ path: TestData.LOGIN_AUTH_PATH });
         await expect(page.getByText(wikipediaUsername).first()).toBeVisible();
     });
 });
